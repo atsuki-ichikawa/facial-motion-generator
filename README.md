@@ -170,7 +170,8 @@ MIT License - 詳細は [LICENSE](LICENSE) を参照してください。
 
 ## 謝辞 / Acknowledgments
 
-- 本研究はNVIDIAが公開する [Audio2Face-3D Dataset](https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire) を使用しています。
+- 本研究はNVIDIAが公開する [Audio2Face-3D](https://github.com/NVIDIA/Audio2Face-3D) フレームワークを使用しています。
+- デモで使用している3Dアバターは [MMDAgent-EX Gene](https://github.com/mmdagent-ex/gene) を使用しています。
 - 愛知工業大学・理化学研究所
 
 ---
