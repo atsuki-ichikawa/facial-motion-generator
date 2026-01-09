@@ -1,7 +1,5 @@
 # Facial Motion Generator
 
-[日本語](#概要) | [English](#overview)
-
 音声からリアルタイムで表情動作を生成するシステム / Audio-driven real-time facial expression generation system
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -27,18 +25,6 @@
 | MSE | 0.074 | 0.035 |
 | パラメータ数 | 181M | 0.72M |
 | 推論時間 | 21.5 ms/frame | 0.62 ms/frame |
-
----
-
-## Overview
-
-**Facial Motion Generator** is a system that estimates 52-dimensional ARKit BlendShape coefficients in real-time from audio input only, driving 3D avatar facial expressions.
-
-### Features
-- Lightweight model (~0.72M parameters)
-- Fast inference (0.62ms/frame)
-- OSC output support (compatible with VRChat, Unity, Blender, etc.)
-- Trained on single-speaker data
 
 ---
 
@@ -170,14 +156,14 @@ MIT License - 詳細は [LICENSE](LICENSE) を参照してください。
 
 ## 謝辞 / Acknowledgments
 
-- 本研究はNVIDIAが公開する [Audio2Face-3D](https://github.com/NVIDIA/Audio2Face-3D) フレームワークを使用しています。
-- デモで使用している3Dアバターは [MMDAgent-EX Gene](https://github.com/mmdagent-ex/gene) を使用しています。
-- 愛知工業大学・理化学研究所
+本プロジェクトは以下のリソースを利用させていただきました。これらの優れたリソースを提供してくださった関係者の皆様に深く感謝いたします。
+
+- **[NVIDIA Audio2Face-3D](https://github.com/NVIDIA/Audio2Face-3D)**: 音声駆動型表情生成のフレームワークおよび学習データセットを利用させていただきました。
+- **[MMDAgent-EX Gene](https://github.com/mmdagent-ex/gene)**: デモンストレーションにおける3Dアバターとして利用させていただきました。
 
 ---
 
 ## 既知の制限事項 / Known Limitations
 
-- 単一話者（Claire）のデータで学習されているため、多話者への一般化は未検証です
+- 単一話者のデータで学習されているため、多話者への一般化は未検証です
 - 眉・頬・眼瞼など顔の上半分の動きは限定的です
-- eGeMAPS特徴量の蓄積に最初の5秒が必要です
