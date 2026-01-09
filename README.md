@@ -34,7 +34,7 @@
 ### 環境構築 / Setup
 
 ```bash
-git clone https://github.com/atsuki-ichikawa/facial-motion-generator.git
+git clone https://github.com/cl-ait/facial-motion-generator.git
 cd facial-motion-generator
 pip install -r requirements.txt
 ```
