@@ -15,7 +15,8 @@
 - 軽量モデル（約0.72M パラメータ）
 - 高速推論（0.62ms/frame）
 - OSC出力対応（VRChat, Unity, Blender等と連携可能）
-- 単一話者データで学習済み
+
+> **Note**: 本リポジトリには学習済みモデルは含まれていません。使用するには、データセットを取得して自身で学習を行う必要があります。
 
 ### 性能
 
@@ -39,6 +40,8 @@ pip install -r requirements.txt
 ```
 
 ### 推論の実行 / Run Inference
+
+推論を実行するには、まず[学習](#学習--training)を完了してチェックポイントを生成する必要があります。
 
 ```bash
 python scripts/inference.py --checkpoint checkpoints/best_model.pth
@@ -66,28 +69,50 @@ OSCでBlendShape値が `127.0.0.1:9000` に送信されます。
 
 ## 学習 / Training
 
-### データセット準備 / Dataset Preparation
+### 1. データセットの取得 / Dataset Acquisition
 
-本システムは [NVIDIA Audio2Face-3D Dataset (Claire)](https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire) を使用して学習されました。
+本システムは [NVIDIA Audio2Face-3D Dataset](https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire) を使用して学習します。
+
+1. [Hugging Face](https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire) からデータセットをダウンロード
+2. ライセンス条項を確認・同意の上、使用してください
+
+### 2. データセット準備 / Dataset Preparation
 
 ```bash
-# データセット準備
-python scripts/prepare_dataset.py --source /path/to/data --output data/processed
+# ダウンロードしたデータを処理
+python scripts/prepare_dataset.py --source /path/to/downloaded/data --output data/processed
+```
 
-# キャッシュ作成（初回のみ）
+### 3. 特徴量キャッシュの作成 / Create Feature Cache
+
+初回学習前に特徴量をキャッシュすることで、学習を高速化できます。
+
+```bash
 python scripts/train.py --prepare-cache
 ```
 
-### 学習の実行 / Run Training
+### 4. 学習の実行 / Run Training
 
 ```bash
 python scripts/train.py --config configs/default.yaml
 ```
 
-学習の再開:
+学習が完了すると、`checkpoints/best_model.pth` にベストモデルが保存されます。
+
+### 5. 学習の再開 / Resume Training
+
 ```bash
 python scripts/train.py --config configs/default.yaml --resume checkpoints/checkpoint_epoch_50.pth
 ```
+
+### 学習パラメータ / Training Parameters
+
+| パラメータ | 説明 | デフォルト値 |
+|-----------|------|-------------|
+| `training.epochs` | エポック数 | 100 |
+| `training.batch_size` | バッチサイズ | 32 |
+| `training.learning_rate` | 学習率 | 0.0001 |
+| `training.weight_decay` | Weight Decay | 0.01 |
 
 ---
 
@@ -100,8 +125,8 @@ python scripts/train.py --config configs/default.yaml --resume checkpoints/check
 | `inference.update_rate` | 推論更新レート | 30 Hz |
 | `inference.osc_port` | OSC出力ポート | 9000 |
 | `model.n_blendshapes` | BlendShape次元数 | 52 |
-| `training.batch_size` | バッチサイズ | 32 |
-| `training.learning_rate` | 学習率 | 0.0001 |
+| `model.d_model` | モデル次元 | 256 |
+| `model.n_heads` | Attention Head数 | 8 |
 
 ---
 
@@ -129,8 +154,7 @@ OSCを有効にし、表情パラメータにマッピングしてください�
 キャリブレーション機能を使用すると、出力値を調整できます：
 
 ```bash
-python scripts/inference.py --checkpoint checkpoints/best_model.pth \
-    --calibration configs/calibration.json
+python scripts/inference.py --checkpoint checkpoints/best_model.pth --calibration configs/calibration.json
 ```
 
 ---

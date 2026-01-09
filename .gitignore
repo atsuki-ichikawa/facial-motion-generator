@@ -70,8 +70,8 @@ runs/
 data/processed/
 data/raw/
 
-# Intermediate checkpoints (keep best_model.pth)
-checkpoints/checkpoint_epoch_*.pth
+# Checkpoints (users need to train their own model)
+checkpoints/*.pth
 
 # ===================
 # macOS
