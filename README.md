@@ -16,7 +16,7 @@
 - 高速推論（0.62ms/frame）
 - OSC出力対応（VRChat, Unity, Blender等と連携可能）
 
-> **Note**: 本リポジトリには学習済みモデルは含まれていません。使用するには、データセットを取得して自身で学習を行う必要があります。
+<!-- **Note**: 本リポジトリには学習済みモデルは含まれていません。使用するには、データセットを取得し学習を行う必要があります。 -->
 
 ### 性能
 
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 
 ### 推論の実行 / Run Inference
 
-推論を実行するには、まず[学習](#学習--training)を完了してチェックポイントを生成する必要があります。
+推論を実行するには、[学習](#学習--training)を完了してチェックポイントを生成する必要があります。
 
 ```bash
 python scripts/inference.py --checkpoint checkpoints/best_model.pth
@@ -71,7 +71,7 @@ OSCでBlendShape値が `127.0.0.1:9000` に送信されます。
 
 ### 1. データセットの取得 / Dataset Acquisition
 
-本システムは [NVIDIA Audio2Face-3D Dataset](https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire) を使用して学習します。
+本システムは [NVIDIA Audio2Face-3D](https://github.com/NVIDIA/Audio2Face-3D) フレームワークを使用して学習します。
 
 1. [Hugging Face](https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire) からデータセットをダウンロード
 2. ライセンス条項を確認・同意の上、使用してください
@@ -85,8 +85,6 @@ python scripts/prepare_dataset.py --source /path/to/downloaded/data --output dat
 
 ### 3. 特徴量キャッシュの作成 / Create Feature Cache
 
-初回学習前に特徴量をキャッシュすることで、学習を高速化できます。
-
 ```bash
 python scripts/train.py --prepare-cache
 ```
@@ -97,7 +95,7 @@ python scripts/train.py --prepare-cache
 python scripts/train.py --config configs/default.yaml
 ```
 
-学習が完了すると、`checkpoints/best_model.pth` にベストモデルが保存されます。
+学習が完了時、`checkpoints/best_model.pth` にベストモデルが保存されます。
 
 ### 5. 学習の再開 / Resume Training
 
@@ -151,7 +149,7 @@ OSCを有効にし、表情パラメータにマッピングしてください�
 
 ## 後処理オプション / Post-processing (Optional)
 
-キャリブレーション機能を使用すると、出力値を調整できます：
+キャリブレーション機能を使用すると、出力値の調整が可能です：
 
 ```bash
 python scripts/inference.py --checkpoint checkpoints/best_model.pth --calibration configs/calibration.json
