@@ -142,6 +142,18 @@
       color: var(--primary-color);
     }
 
+    .btn-disabled {
+      background: #e5e7eb;
+      color: #9ca3af;
+      border: 1px solid #d1d5db;
+      cursor: not-allowed;
+    }
+
+    .btn-disabled:hover {
+      background: #e5e7eb;
+      color: #9ca3af;
+    }
+
     /* Sections */
     section {
       padding: 50px 0;
@@ -287,12 +299,12 @@
             </svg>
             Code
           </a>
-          <a href="static/pdfs/paper.pdf" class="btn btn-secondary">
+          <span class="btn btn-disabled" title="Paper not yet published">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
             </svg>
-            Paper
-          </a>
+            Paper (To appear)
+          </span>
         </div>
       </div>
     </section>
@@ -369,7 +381,7 @@
     <!-- BibTeX -->
     <section>
       <div class="container">
-        <h2>Citation</h2>
+        <h2>Bibtex</h2>
         <div class="bibtex">
           <button class="copy-btn" onclick="copyBibtex()">Copy</button>
 @inproceedings{ichikawa2026facial,
