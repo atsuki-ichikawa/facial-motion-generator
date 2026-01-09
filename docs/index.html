@@ -312,7 +312,7 @@
     <!-- Abstract -->
     <section class="alt">
       <div class="container">
-        <h2>Abstract</h2>
+        <h2>概要</h2>
         <div class="abstract">
           <p>
             近年、3Dアバターを介した対話が普及する一方、音声に同期した表情生成は遅延や実装依存が課題である。
@@ -325,18 +325,57 @@
       </div>
     </section>
 
+    <!-- Background -->
+    <section>
+      <div class="container">
+        <h2>背景と課題</h2>
+        <div class="abstract">
+          <p>
+            3Dアバターを用いた配信や対話エージェントの普及により、人と人（もしくは人とAI）が仮想的なキャラクターを通してコミュニケーションする機会が増えています。
+            こうした場面では、発話内容だけでなく、うなずきや口の動き、表情といった<strong>非言語情報</strong>が対話の自然さや理解のしやすさに大きく関わります。
+          </p>
+          <p style="margin-top: 15px;">
+            アバターの表情を適切に制御するためには、口の開閉や眉の上げ下げといった動きを数値として表した「表情動作の制御値」を各時刻において逐次推定する必要があります。
+            NVIDIAのAudio2Faceは高品質な表情生成を実現していますが、一部はAPI経由で動作するため通信に起因する遅延が生じる可能性があり、
+            またシステムがオープンではない実装に依存する場合、ローカル環境における再現や改良が困難という課題があります。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method -->
+    <section class="alt">
+      <div class="container">
+        <h2>提案手法</h2>
+        <div class="abstract">
+          <p>
+            本研究では、音声のみを入力として3Dアバターの表情を駆動するための表情動作の制御値（52次元BlendShape係数）をリアルタイムに推定する<strong>Facial Motion Generator</strong>を提案します。
+          </p>
+          <p style="margin-top: 15px;">
+            <strong>Audio Encoder：</strong>音声からLog-Mel特徴量（短期的なスペクトル情報）とeGeMAPS特徴量（声の高さや強さなど長期的な韻律情報）を抽出し、
+            発音に由来する口の形と抑揚に由来する表情変化の両方を表現します。
+          </p>
+          <p style="margin-top: 15px;">
+            <strong>表情生成モデル：</strong>52個のBlendShape要素それぞれに対応した表情特徴量（学習可能なパラメータ）をQueryとし、
+            Cross-Attentionにより音声特徴量のどの部分に注目すべきかを計算します。
+            これにより、音声特徴量の成分が口元・眉・目などどの表情要素に対応するかをモデルが学習し、軽量かつ高速な推論を実現しています。
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Results -->
     <section>
       <div class="container">
-        <h2>Results</h2>
+        <h2>実験結果</h2>
         <table class="results-table">
           <thead>
             <tr>
-              <th>Model</th>
+              <th>モデル</th>
               <th>MSE ↓</th>
               <th>MAE ↓</th>
-              <th>Parameters</th>
-              <th>Inference Time</th>
+              <th>パラメータ数</th>
+              <th>推論時間</th>
             </tr>
           </thead>
           <tbody>
@@ -362,7 +401,7 @@
     <!-- Architecture -->
     <section class="alt">
       <div class="container">
-        <h2>Architecture</h2>
+        <h2>システム構成</h2>
         <img src="static/images/architecture_image.svg" alt="Facial Motion Generator Architecture" class="architecture-img">
       </div>
     </section>
@@ -370,7 +409,7 @@
     <!-- Demo -->
     <section>
       <div class="container">
-        <h2>Inference Demo</h2>
+        <h2>推論デモ</h2>
         <img src="static/images/inference_image.svg" alt="Inference Demo with 3D Avatar" class="architecture-img">
         <p style="text-align: center; margin-top: 15px; color: #6b7280; font-size: 0.9rem;">
           リアルタイム推論による3Dアバターの表情駆動例（3Dアバター: <a href="https://github.com/mmdagent-ex/gene" target="_blank">Gene</a>）
@@ -396,7 +435,7 @@
     <!-- Acknowledgments -->
     <section class="alt">
       <div class="container">
-        <h2>Acknowledgments</h2>
+        <h2>謝辞</h2>
         <div style="max-width: 700px; margin: 0 auto; text-align: left;">
           <p style="margin-bottom: 20px;">
             本プロジェクトは以下のリソースを利用させていただきました。これらの優れたリソースを提供してくださった関係者の皆様に深く感謝いたします。
